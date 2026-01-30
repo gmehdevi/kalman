@@ -308,6 +308,22 @@ namespace ft
 
     size_type rows() const {return n;}
     size_type cols() const {return m;}
+    void set(size_type row, size_type col, const matrix &block) {
+        if (row + block.n > n || col + block.m > m)
+            throw std::out_of_range("matrix set out of range");
+        for (size_type i = 0; i < block.n; ++i)
+            for (size_type j = 0; j < block.m; ++j)
+                mat[row + i][col + j] = block.mat[i][j];
+    }
+    void set_block(size_type row, size_type col, const matrix &block) {
+        set(row, col, block);
+    }
+    void set_diag(const ft::vector<T> &d, size_type offset = 0) {
+        if (offset + d.size() > n || offset + d.size() > m)
+            throw std::out_of_range("matrix set_diag out of range");
+        for (size_type i = 0; i < d.size(); ++i)
+            mat[offset + i][offset + i] = d[i];
+    }
     iterator begin() {return iterator(0, 0, mat);}
     iterator end()   {return iterator(n, m, mat);}
     reverse_iterator rbegin() {return   end();}

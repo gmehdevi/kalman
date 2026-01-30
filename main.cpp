@@ -18,14 +18,14 @@ using namespace std::chrono;
 
 
 tuple<double, double, bool, double, double, double, double, double> parse_arguments(int ac, const char *av[]) {
-    double process_noise = 0.01;
+    double process_noise = 1.0;
     double n = 1;
     bool print = false;
-    double accNoise = 10E-6;
-    double gyrNoise = 10E-4;
-    double gpsNoise = 1800;
-    double thresh = 100;
-    double alpha = 0.001;
+    double accNoise = 1e-4;
+    double gyrNoise = 1e-4;
+    double gpsNoise = 0.01;
+    double thresh = 5.0;
+    double alpha = 0.01;
     try {
         for (int i = 1; i < ac; i++) {
             if (strcmp(av[i], "--process_noise") == 0) {
@@ -93,7 +93,6 @@ int main(int ac, const char *av[]) {
     file.open("log.txt", ofstream::out | ofstream::trunc);
     startTime = high_resolution_clock::now();
     size_t msgs = 0;
-
     while (true) {
 
         if (socket.available() > 0) {
@@ -108,8 +107,6 @@ int main(int ac, const char *av[]) {
             startTime = high_resolution_clock::now();
 
             kalman.parse(msg.str());
-
-            kalman.predict();
             socket.send_to(asio::buffer(kalman.pos_to_string()), remote_endpoint, 0, error);
             if (error)
                 throw system::system_error(error);
@@ -132,9 +129,11 @@ int main(int ac, const char *av[]) {
     file << "\nReceived " << msgs << " messages." << std::endl;
 
     #ifdef BONUS
+        std::cerr << "Messages processed: " << msgs << std::endl;
         std::cerr << "GPS variance: " << kalman.R_pos[0][0] << std::endl;
-        std::cerr << "Acc variance: " << kalman.R_acc[0][0] << std::endl;
-        std::cerr << "Gyr variance: " << kalman.R_dir[0][0] << std::endl;
+        std::cerr << "Acc variance: " << kalman.acc_var << std::endl;
+        std::cerr << "Gyr variance: " << kalman.gyr_var << std::endl;
+        kalman.log_gps_stats();
     #endif
     
     file.close();

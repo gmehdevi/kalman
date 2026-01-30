@@ -1,6 +1,7 @@
 #!/bin/bash
+make clean > /dev/null
 
-make speed > /dev/null
+make bonus > /dev/null
 
 echo "Testing 10 runs for 90 minutes each."
 
@@ -8,12 +9,12 @@ for i in {1..10}
 do
 
   echo -n "run : ${i} - "
-  # ./imu-sensor-stream-linux -d 90 > /dev/null &
-  ./imu-sensor-stream-linux -d 90 -g 0.1 > /dev/null &
+  ./imu-sensor-stream-linux -d 90 > /dev/null &
+  # ./imu-sensor-stream-linux -d 90 -g 0.1 > /dev/null &
   IMU_PID=$!
 
-  # ./kalman  > /dev/null &
-  ./kalman --gps 0.01 > /dev/null &
+  ./kalman > /dev/null &
+  # ./kalman --gps 0.01 > /dev/null &
   KAL_PID=$!
 
   wait $IMU_PID
