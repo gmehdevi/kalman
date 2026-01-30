@@ -1,0 +1,20 @@
+# build artifacts
+kalman
+graph
+*.o
+
+# runtime outputs
+log.txt
+variances.txt
+core*
+
+# local tools/binaries
+imu-sensor-stream-linux
+
+# cmake/graph build
+graph_vtk/CMakeFiles/
+graph_vtk/CMakeCache.txt
+graph_vtk/Makefile
+graph_vtk/cmake_install.cmake
+
+*.md

@@ -13,7 +13,7 @@ do
   # ./imu-sensor-stream-linux -d 90 -g 0.1 > /dev/null &
   IMU_PID=$!
 
-  ./kalman > /dev/null &
+  ./kalman --acc 1e-6 --gyr 1e-4 --gps 1e-2 > /dev/null &
   # ./kalman --gps 0.01 > /dev/null &
   KAL_PID=$!
 
