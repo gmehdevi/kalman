@@ -20,7 +20,8 @@ graph:
 
 
 clean:
-	rm -f kalman graph *.o *.txt 
+	rm -f kalman graph *.o *.txt log.txt variances.txt core*
+	rm -rf graph_vtk/CMakeFiles graph_vtk/CMakeCache.txt graph_vtk/Makefile graph_vtk/cmake_install.cmake
 	cd graph_vtk && make clean
 
 

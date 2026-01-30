@@ -2,7 +2,6 @@
 kalman
 graph
 *.o
-log
 # runtime outputs
 log.txt
 variances.txt
@@ -16,5 +15,3 @@ graph_vtk/CMakeFiles/
 graph_vtk/CMakeCache.txt
 graph_vtk/Makefile
 graph_vtk/cmake_install.cmake
-
-*.md
