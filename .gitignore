@@ -2,7 +2,7 @@
 kalman
 graph
 *.o
-
+log
 # runtime outputs
 log.txt
 variances.txt
